@@ -31,7 +31,7 @@
         android:layout_margin="@dimen/fab_margin"
         android:backgroundTint="@color/colorPrimary"
         android:scaleType="center"
-        app:srcCompat="@drawable/emoticon_excited"
+        app:srcCompat="@drawable/emoticon_excited_small"
         app:borderWidth="0dp"
         app:rippleColor="@color/colorAccent" />
 

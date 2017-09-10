@@ -1,9 +1,9 @@
 package com.choch.michaeldicioccio.weatherapp;
 
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,6 +12,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -55,7 +56,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.main_activity_layout);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -67,8 +68,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if ((requestCode == 100) && (resultCode == FeelingsActivity.RESULT_OK)) {
+            Toast.makeText(this, String.valueOf(data.getIntExtra("feeling", -1)), Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void setupFab() {
@@ -79,8 +83,10 @@ public class MainActivity extends AppCompatActivity {
         weatherFeelingFloatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
+//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_SHORT)
+//                        .setAction("Action", null).show();
+                Intent intent = new Intent(MainActivity.this, FeelingsActivity.class);
+                startActivityForResult(intent, 100);
             }
         });
     }
@@ -164,9 +170,11 @@ public class MainActivity extends AppCompatActivity {
         protected void onPostExecute(List<Weather> result) {
             super.onPostExecute(result);
             nowFragment.setCurrentWeather(result.get(0));
-            hourFragment.setHourWeatherDataArrayList(result);
+            hourFragment.setHourWeatherDataArrayList(result.get(0).getHourlyWeatherArrayList());
             dayFragment.setDayWeatherDataArrayList(result);
+
             viewPagerAdapter.notifyDataSetChanged();
+
             if (multiSwipeRefreshLayout.isRefreshing()) {
                 multiSwipeRefreshLayout.setRefreshing(false);
             }

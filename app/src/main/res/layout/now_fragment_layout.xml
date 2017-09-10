@@ -27,13 +27,120 @@
                 android:id="@+id/condition_text_view"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="text"
                 android:layout_alignParentStart="true"
                 android:layout_alignParentTop="true"
-                android:textSize="20sp"/>
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="2dp"
+                android:textSize="36sp"/>
+
+            <ImageView
+                android:id="@+id/weather_icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
+                android:scaleType="center"
+                android:src="@drawable/weather_sunny" />
+
+            <TextView
+                android:id="@+id/time_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/condition_text_view"
+                android:layout_marginStart="10dp"
+                android:layout_marginBottom="2dp"
+                android:textSize="10sp"/>
+
+            <TextView
+                android:id="@+id/temperature_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/time_text_view"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="4dp"
+                android:textSize="34sp"/>
+
+            <TextView
+                android:id="@+id/temperature_high_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/temperature_text_view"
+                android:layout_alignTop="@+id/temperature_text_view"
+                android:layout_marginTop="8dp"
+                android:layout_marginStart="4dp"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/temperature_low_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@+id/temperature_text_view"
+                android:layout_alignBottom="@+id/temperature_text_view"
+                android:layout_marginBottom="6dp"
+                android:layout_marginStart="4dp"
+                android:textSize="12sp"/>
+
+            <TextView
+                android:id="@+id/humidity_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/temperature_text_view"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="2dp"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/precipitation_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/humidity_text_view"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="2dp"
+                android:textSize="18sp"/>
+
+            <TextView
+                android:id="@+id/wind_text_view"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_below="@+id/precipitation_text_view"
+                android:layout_marginStart="8dp"
+                android:layout_marginBottom="8dp"
+                android:textSize="18sp"/>
 
         </RelativeLayout>
 
+    </android.support.v7.widget.CardView>
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/feeling_card_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/current_weather_card_view"
+        android:background="@color/colorAccent"
+        app:cardCornerRadius="2dp"
+        app:cardElevation="2dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="90sp"/>
+
+        </RelativeLayout>
 
     </android.support.v7.widget.CardView>
 

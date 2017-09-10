@@ -10,7 +10,7 @@ import java.util.Calendar;
 public class Weather {
 
     /* Attributes */
-    private Calendar date;
+    private String date;
     private String condition;
     private int temperature;
     private int temperature_high;
@@ -18,9 +18,14 @@ public class Weather {
     private int wind_mph;
     private int humidity;
     private int precipitation;
+    private int icon;
     private ArrayList<HourlyWeather> hourlyWeatherArrayList;
 
-    Weather(Calendar date, String condition, int temperature, int temperature_high, int temperature_low, int wind_mph, int humidity, int precipitation) {
+    Weather() {
+
+    }
+
+    Weather(String date, String condition, int temperature, int temperature_high, int temperature_low, int wind_mph, int humidity, int precipitation, int icon) {
         this.date = date;
         this.condition = condition;
         this.temperature = temperature;
@@ -29,10 +34,11 @@ public class Weather {
         this.wind_mph = wind_mph;
         this.humidity = humidity;
         this.precipitation = precipitation;
+        this.icon = icon;
     }
 
     /* Getters */
-    public Calendar getDate() {
+    public String getDate() {
         return date;
     }
 
@@ -48,7 +54,7 @@ public class Weather {
         return temperature_high;
     }
 
-    public int getTemperature_low() {
+    public int getTemperatureLow() {
         return temperature_low;
     }
 
@@ -64,12 +70,16 @@ public class Weather {
         return precipitation;
     }
 
+    public int getIcon() {
+        return icon;
+    }
+
     public ArrayList<HourlyWeather> getHourlyWeatherArrayList() {
         return hourlyWeatherArrayList;
     }
 
     /* Setters */
-    public void setDate(Calendar date) {
+    public void setDate(String date) {
         this.date = date;
     }
 

@@ -7,7 +7,7 @@
     android:background="@color/colorBackground"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.choch.michaeldicioccio.weatherapp.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:showIn="@layout/main_activity_layout">
 
     <RelativeLayout
         android:layout_width="match_parent"

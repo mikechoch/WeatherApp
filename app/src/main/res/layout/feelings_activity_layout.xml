@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#64000000">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:theme="@style/AppTheme.AppBarOverlay">
+
+        <android.support.v7.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:background="?attr/colorPrimary"
+            app:popupTheme="@style/AppTheme.PopupOverlay" />
+
+    </android.support.design.widget.AppBarLayout>
+
+    <FrameLayout
+        android:id="@+id/neutral_fab_layout"
+        android:layout_width="84dp"
+        android:layout_height="84dp"
+        android:layout_centerInParent="true">
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/neutral_fab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/emoticon_neutral"
+            android:backgroundTint="@color/colorPrimary"
+            android:scaleType="center"
+            app:rippleColor="@color/colorAccent"
+            app:borderWidth="0dp"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/excited_fab_layout"
+        android:layout_width="84dp"
+        android:layout_height="84dp"
+        android:clickable="false"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/neutral_fab_layout"
+        android:layout_marginStart="32dp" >
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/excited_fab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/emoticon_excited"
+            android:backgroundTint="@color/colorPrimary"
+            android:scaleType="center"
+            app:rippleColor="@color/colorAccent"
+            app:borderWidth="0dp"/>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/dead_fab_layout"
+        android:layout_width="84dp"
+        android:layout_height="84dp"
+        android:clickable="false"
+        android:layout_centerVertical="true"
+        android:layout_toStartOf="@id/neutral_fab_layout"
+        android:layout_marginEnd="32dp" >
+
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/dead_fab"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/emoticon_dead"
+            android:backgroundTint="@color/colorPrimary"
+            android:scaleType="center"
+            app:rippleColor="@color/colorAccent"
+            app:borderWidth="0dp"/>
+
+    </FrameLayout>
+
+</RelativeLayout>

@@ -1,6 +1,5 @@
 package com.choch.michaeldicioccio.weatherapp;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -24,10 +23,11 @@ public class HourFragment extends Fragment {
 
     private RecyclerView hourRecyclerView;
 
-    private ArrayList<Weather> hourWeatherDataArrayList;
+    private ArrayList<HourlyWeather> hourWeatherDataArrayList;
 
     public HourFragment() {
         // Required empty public constructor
+        hourWeatherDataArrayList = new ArrayList<>();
     }
 
     @Override
@@ -43,9 +43,11 @@ public class HourFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.hour_fragment_layout, container, false);
 
-        hourWeatherDataArrayList = new ArrayList<>();
-
         hourRecyclerView = (RecyclerView) view.findViewById(R.id.hour_recycler_view);
+        HourRecyclerViewAdapter hourRecyclerViewAdapter = new HourRecyclerViewAdapter(R.layout.hour_recycler_view_item, hourWeatherDataArrayList);
+        hourRecyclerView.setAdapter(hourRecyclerViewAdapter);
+        hourRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        hourRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         return view;
     }
@@ -56,12 +58,8 @@ public class HourFragment extends Fragment {
         super.onCreateOptionsMenu(menu, inflater);
     }
 
-    public void setHourWeatherDataArrayList(List<Weather> weatherDataArrayList) {
+    public void setHourWeatherDataArrayList(List<HourlyWeather> weatherDataArrayList) {
         hourWeatherDataArrayList = new ArrayList<>(weatherDataArrayList);
-        RecyclerViewAdapter hourRecyclerViewAdapter = new RecyclerViewAdapter(R.layout.recycler_view_item, hourWeatherDataArrayList);
-        hourRecyclerView.setAdapter(hourRecyclerViewAdapter);
-        hourRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        hourRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 
 }

@@ -27,6 +27,7 @@ public class DayFragment extends Fragment {
 
     public DayFragment() {
         // Required empty public constructor
+        dayWeatherDataArrayList = new ArrayList<>();
     }
 
     @Override
@@ -42,9 +43,11 @@ public class DayFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.day_fragment_layout, container, false);
 
-        dayWeatherDataArrayList = new ArrayList<>();
-
         dayRecyclerView = (RecyclerView) view.findViewById(R.id.day_recycler_view);
+        DayRecyclerViewAdapter dayRecyclerViewAdapter = new DayRecyclerViewAdapter(R.layout.day_recycler_view_item, dayWeatherDataArrayList);
+        dayRecyclerView.setAdapter(dayRecyclerViewAdapter);
+        dayRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        dayRecyclerView.setItemAnimator(new DefaultItemAnimator());
 
         return view;
     }
@@ -57,9 +60,5 @@ public class DayFragment extends Fragment {
 
     public void setDayWeatherDataArrayList(List<Weather> weatherDataArrayList) {
         dayWeatherDataArrayList = new ArrayList<>(weatherDataArrayList);
-        RecyclerViewAdapter dayRecyclerViewAdapter = new RecyclerViewAdapter(R.layout.recycler_view_item, dayWeatherDataArrayList);
-        dayRecyclerView.setAdapter(dayRecyclerViewAdapter);
-        dayRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        dayRecyclerView.setItemAnimator(new DefaultItemAnimator());
     }
 }

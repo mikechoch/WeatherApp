@@ -34,22 +34,53 @@ public class WeatherDataJson {
 
     ArrayList<Weather> parseJson(JSONObject jsonObject) throws JSONException {
         ArrayList<Weather> weatherArrayList = new ArrayList<>();
-        //TODO: Use current info for "NOW" and first value in "DAY"
-        Calendar date = getCurrentDateTime(jsonObject);
+
+        String date;
         String condition = getCurrentCondition(jsonObject);
         int temperature = getCurrentTemperature(jsonObject);
         int temperature_high, temperature_low;
         int wind_mph = getCurrentWind(jsonObject);
         int humidity = getCurrentHumidity(jsonObject);
         int precipitation = getCurrentPrecipitation(jsonObject);
+        int icon = R.drawable.weather_sunny;
 
         JSONArray jsonForecastArray = jsonObject.getJSONObject("forecast").getJSONArray("forecastday");
         for (int i = 0; i < jsonForecastArray.length(); i++) {
             JSONObject jsonForecastObject = new JSONObject(jsonForecastArray.get(i).toString());
-
+            ArrayList<HourlyWeather> hourlyWeatherArrayList = new ArrayList<>();
             if (i == 0) {
+                date = getDateTime(jsonForecastObject);
                 temperature_high = getTemperatureHigh(jsonForecastObject);
                 temperature_low = getTemperatureLow(jsonForecastObject);
+                JSONArray hourJsonArray = jsonForecastObject.getJSONArray("hour");
+                for (int j = 0; j < hourJsonArray.length(); j++) {
+                    JSONObject hourJsonObject = new JSONObject(hourJsonArray.get(j).toString());
+                    HourlyWeather hourlyWeather = new HourlyWeather(
+                            hourJsonObject.getString("time").split(" ")[1],
+                            hourJsonObject.getJSONObject("condition").getString("text"),
+                            (int) Math.round(hourJsonObject.getDouble("temp_f")),
+                            (int) Math.round(hourJsonObject.getDouble("wind_mph")),
+                            (int) Math.round(hourJsonObject.getDouble("humidity")),
+                            (int) Integer.parseInt(hourJsonObject.getString("chance_of_rain")));
+
+                    System.out.println(hourlyWeather.getDate());
+                    System.out.println(hourlyWeather.getCondition());
+                    System.out.println(hourlyWeather.getTemperature());
+                    System.out.println(hourlyWeather.getHumidity());
+                    System.out.println(hourlyWeather.getPrecipitation());
+                    System.out.println(hourlyWeather.getWind());
+
+                    for (WeatherConditions weatherConditions : WeatherConditions.values()) {
+                        if (hourlyWeather.getCondition().toLowerCase().equals(weatherConditions.getStringCondition().toLowerCase())) {
+                            icon = weatherConditions.getIcon();
+                            hourlyWeather.setIcon(icon);
+                        } else {
+                            hourlyWeather.setIcon(R.drawable.weather_sunny);
+                        }
+                    }
+
+                    hourlyWeatherArrayList.add(hourlyWeather);
+                }
 
             } else {
                 date = getDateTime(jsonForecastObject);
@@ -62,7 +93,13 @@ public class WeatherDataJson {
                 precipitation = getPrecipitation(jsonForecastObject);
             }
 
-            System.out.println(date.getTime());
+            for (WeatherConditions weatherConditions : WeatherConditions.values()) {
+                if (condition.toLowerCase().equals(weatherConditions.getStringCondition().toLowerCase())) {
+                    icon = weatherConditions.getIcon();
+                }
+            }
+
+            System.out.println(date);
             System.out.println(condition);
             System.out.println(temperature);
             System.out.println(temperature_high);
@@ -79,34 +116,34 @@ public class WeatherDataJson {
                     temperature_low,
                     wind_mph,
                     humidity,
-                    precipitation);
+                    precipitation,
+                    icon);
 
+            weather.setHourlyWeatherArrayList(hourlyWeatherArrayList);
             weatherArrayList.add(weather);
         }
 
         return weatherArrayList;
     }
 
-    private Calendar getCurrentDateTime(JSONObject jsonObject) {
+    private String getCurrentDateTime(JSONObject jsonObject) {
         try {
             String date_time = jsonObject.getJSONObject("current").getString("last_updated");
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm", Locale.US);
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(dateFormat.parse(date_time));
-            return cal;
+            String[] date_time_array = date_time.split(" ");
+            String time = date_time_array[1];
+            return time;
         } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
     }
 
-    private Calendar getDateTime(JSONObject jsonObject) {
+    private String getDateTime(JSONObject jsonObject) {
         try {
             String date_time = jsonObject.getString("date");
-            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(dateFormat.parse(date_time));
-            return cal;
+            String[] date_time_array = date_time.split("-");
+            String date = date_time_array[1] + "/" + date_time_array[2];
+            return date;
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -116,7 +153,7 @@ public class WeatherDataJson {
     private String getCurrentCondition(JSONObject jsonObject) {
         try{
             String condition = jsonObject.getJSONObject("current").getJSONObject("condition").getString("text");
-            return condition;
+            return setTitleCase(condition);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -126,7 +163,7 @@ public class WeatherDataJson {
     private String getCondition(JSONObject jsonObject) {
         try{
             String condition = jsonObject.getJSONObject("day").getJSONObject("condition").getString("text");
-            return condition;
+            return setTitleCase(condition);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -231,6 +268,16 @@ public class WeatherDataJson {
             e.printStackTrace();
         }
         return 0;
+    }
+
+    private String setTitleCase(String string) {
+        String[] splitString = string.split(" ");
+        String newString = "";
+        for (String str : splitString) {
+            newString += str.substring(0, 1).toUpperCase() + str.substring(1, str.length()) + " ";
+        }
+
+        return newString.substring(0, newString.length() - 1);
     }
 
 }
